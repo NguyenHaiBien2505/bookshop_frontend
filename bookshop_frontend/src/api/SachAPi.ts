@@ -1,4 +1,5 @@
 import React from "react";
+import { error } from 'console';
 import SachModel from "../layouts/models/SachModel";
 import { my_request } from "./MyRequest";
 
@@ -57,15 +58,55 @@ export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
 }
 
 
-// 
-export async function timKiemSach(tuKhoaTimKiem: string): Promise<KetQuaInterface> {
+export async function timKiemSach(tuKhoaTimKiem: string, maTheLoai: number): Promise<KetQuaInterface> {
 
     // Xác định endpoint
     let duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=0`;
-    if (tuKhoaTimKiem !== '') {
-        duongDan=`http://localhost:8080/sach/search/findByTenSachContaining?sort=maSach,desc&size=8&page=0&tenSach=${tuKhoaTimKiem}`
+
+    if (tuKhoaTimKiem !== '' && maTheLoai == 0) {
+        duongDan = `http://localhost:8080/sach/search/findByTenSachContaining?sort=maSach,desc&size=8&page=0&tenSach=${tuKhoaTimKiem}`
+    } else if (tuKhoaTimKiem === '' && maTheLoai > 0) {
+        duongDan = `http://localhost:8080/sach/search/findByTheLoai_MaTheLoai?sort=maSach,desc&size=8&page=0&maTheLoai=${maTheLoai}`
+    } else if (tuKhoaTimKiem !== '' && maTheLoai > 0) {
+        duongDan = `http://localhost:8080/sach/search/findByTenSachContainingAndTheLoai_MaTheLoai?sort=maSach,desc&size=8&page=0&maTheLoai=${maTheLoai}&tenSach=${tuKhoaTimKiem}`
     }
 
     return laySach(duongDan);
 
+}
+
+export async function laySachTheoMaSach(maSach: number): Promise<SachModel|null> {
+
+    const duongDan = `http://localhost:8080/sach/${maSach}`;
+
+    let ketQua: SachModel;
+
+    try {
+        // Gọi phương thức request
+        const response =  await fetch(duongDan);
+
+        if(!response.ok){
+            throw new Error('Gặp lỗi trong quá trình gọi API lấy sách!')
+        }
+
+        const sachData = await response.json();
+
+        if(sachData){
+            return {
+                maSach: sachData.maSach,
+                tenSach: sachData.tenSach,
+                giaBan: sachData.giaBan,
+                giaNiemYet: sachData.giaNiemYet,
+                moTa: sachData.moTa,
+                soLuong: sachData.soLuong,
+                tenTacGia: sachData.tenTacGia,
+                trungBinhXepHang: sachData.trungBinhXepHang
+            }
+        }else{
+            throw new Error('Sách không tồn tài!');
+        }
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
 }

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 interface NavbarProps {
   tuKhoaTimKiem: string;
@@ -9,11 +10,11 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
 
   const [tuKhoaTamThoi, setTuKhoaTamThoi] = useState('');
 
-  const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
+  const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>)=>{ // khi nhập nội dung
       setTuKhoaTamThoi(e.target.value);
   }
-  
-  const handleSearch= ()=>{
+
+  const handleSearch= ()=>{ // khi click chuột
     setTuKhoaTimKiem(tuKhoaTamThoi);
   }
   return (
@@ -27,16 +28,26 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Trang chủ</a>
+              <NavLink className="nav-link active" aria-current="page" to="/">Trang chủ</NavLink>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Thể loại sách
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li><a className="dropdown-item" href="#">Thể loại 1</a></li>
-                <li><a className="dropdown-item" href="#">Thể loại 2</a></li>
-                <li><a className="dropdown-item" href="#">Thể loại 3</a></li>
+                <li><a className="dropdown-item" href="/1">Thể loại 1</a></li>
+                <li><a className="dropdown-item" href="/2">Thể loại 2</a></li>
+                <li><a className="dropdown-item" href="/3">Thể loại 3</a></li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Thể loại sách
+              </NavLink>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
+                <li><NavLink className="dropdown-item" to="/1">Thể loại 1</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/2">Thể loại 2</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/3">Thể loại 3</NavLink></li>
               </ul>
             </li>
             <li className="nav-item dropdown">

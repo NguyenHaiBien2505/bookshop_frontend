@@ -5,11 +5,13 @@ import SachModel from "../models/SachModel";
 import { layToanBoSach, timKiemSach } from "../../api/SachAPi";
 import SachProps from "./components/SachProps";
 
+
 interface DanhSachSanPhamProps {
     tuKhoaTimKiem: string;
+    maTheLoai: number;
 }
 
-function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
+function DanhSachSanPham({ tuKhoaTimKiem, maTheLoai }: DanhSachSanPhamProps) {
 
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
@@ -19,7 +21,7 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
     const [tongSoSach, setSoSach] = useState(0);
 
     useEffect(() => {
-        if (tuKhoaTimKiem === '') {
+        if (tuKhoaTimKiem === '' && maTheLoai==0) {
             layToanBoSach(trangHienTai - 1).then(
                 kq => {
                     setDanhSachQuyenSach(kq.ketQua);
@@ -33,7 +35,7 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
                 }
             );
         }else{
-            timKiemSach(tuKhoaTimKiem).then(
+            timKiemSach(tuKhoaTimKiem, maTheLoai).then(
                 kq => {
                     setDanhSachQuyenSach(kq.ketQua);
                     setTongSoTrang(kq.tongSoTrang);
@@ -46,7 +48,7 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
                 }
             );
         }
-    }, [trangHienTai, tuKhoaTimKiem]);
+    }, [trangHienTai, tuKhoaTimKiem, maTheLoai]);
 
     const phanTrang = (trang: number) => {
         setTrangHienTai(trang);
@@ -96,4 +98,4 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
     );
 }
 
-export default DanhSachSanPham;
+export default DanhSachSanPham

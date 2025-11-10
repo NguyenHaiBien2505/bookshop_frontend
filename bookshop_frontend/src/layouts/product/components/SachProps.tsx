@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import SachModel from "../../models/SachModel";
 import HinhAnhModel from "../../models/HinhAnhModel";
-import { layToanBoAnhCuaMotSach } from "../../../api/AnhAPI";
-
+import { lay1AnhCuaMotSach } from "../../../api/AnhAPI";
 
 interface SachPropsInterface{
     sach: SachModel;
@@ -17,7 +17,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
     const [baoLoi, setBaoLoi] = useState(null);
 
     useEffect(() => {
-        layToanBoAnhCuaMotSach(maSach).then(
+        lay1AnhCuaMotSach(maSach).then(
             hinhAnhData =>{
                 setDanhSachAnh(hinhAnhData);
                 setDangTaiDuLieu(false);
@@ -55,15 +55,20 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
     return (
         <div className="col-md-3 mt-2">
             <div className="card">
-                <img
-                    src={duLieuAnh}
-                    className="card-img-top"
-                    alt={props.sach.tenSach}
-                    style={{ height: '200px' }}
-                />
+                <Link to={`/sach/${props.sach.maSach}`}  >
+                    <img
+                        src={duLieuAnh}
+                        className="card-img-top"
+                        alt={props.sach.tenSach}
+                        style={{ height: '200px' }}
+                    />
+                </Link>
                 <div className="card-body">
-                    <h5 className="card-title">{props.sach.tenSach}</h5>
-                    <p className="card-text">{props.sach.moTa}</p>
+                    <Link to={`/sach/${props.sach.maSach}`} style={{textDecoration:'none'}}>
+                        <h5 className="card-title">{props.sach.tenSach}</h5>
+                        </Link>
+                        <p className="card-text">{props.sach.moTa}</p>
+                   
                     <div className="price">
                         <span className="original-price">
                             <del>{props.sach.giaNiemYet}</del>
