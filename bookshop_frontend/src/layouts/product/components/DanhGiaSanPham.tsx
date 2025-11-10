@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DanhGiaModel from "../../models/DanhGiaModel";
 import { layToanBoDanhGiaCuaMotSach } from "../../../api/DanhGiaAPI";
+import renderRating from "../../utils/SaoXepHang";
 
 
 interface DanhGiaSanPham {
@@ -30,10 +31,6 @@ const DanhGiaSanPham: React.FC<DanhGiaSanPham> = (props) => {
     }, [] // Chi goi mot lan
     )
 
-    console.log(danhSachDanhGia.length);
-
-    // console.log(danhSachDanhGia.length);
-
     if (dangTaiDuLieu) {
         return (
             <div>
@@ -57,7 +54,7 @@ const DanhGiaSanPham: React.FC<DanhGiaSanPham> = (props) => {
                 danhSachDanhGia.map((danhGia, index) => (
                     <div className="row">
                         <div className="col-4  text-end">
-                            <p>{danhGia.diemXepHang}</p>
+                            <p>{renderRating(danhGia.diemXepHang?danhGia.diemXepHang:0)}</p>
                         </div>
                         <div className="col-8 text-start">
                             <p>{danhGia.nhanXet}</p>
