@@ -4,7 +4,7 @@ function DangKyNguoiDung() {
 
     const [tenDangNhap, setTenDangNhap] = useState("");
     const [email, setEmail] = useState("");
-    const [hoDem, setHoDen] = useState("");
+    const [hoDem, setHoDem] = useState("");
     const [ten, setTen] = useState("");
     const [soDienThoai, setSoDienThoai] = useState("");
     const [matKhau, setMatKhau] = useState("");
@@ -53,7 +53,9 @@ function DangKyNguoiDung() {
                         hoDem: hoDem,
                         ten: ten,
                         soDienThoai: soDienThoai,
-                        gioiTinh: gioiTinh
+                        gioiTinh: gioiTinh,
+                        daKichHoaT : 0,
+                        maKichHoat : ""
                     })
                 }
                 );
@@ -235,7 +237,7 @@ function DangKyNguoiDung() {
                             id="hoDem"
                             className="form-control"
                             value={hoDem}
-                            onChange={(e) => setHoDen(e.target.value)}
+                            onChange={(e) => setHoDem(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
